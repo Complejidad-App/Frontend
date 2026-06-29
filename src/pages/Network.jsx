@@ -51,7 +51,13 @@ function Stat({ label, value }) {
 
 function Network() {
   const [tab, setTab] = useState('graph')
-  const { data, loading, error, run } = useApi(fetchers[tab], { deps: [tab] })
+  const { data, loading, error, run, setData } = useApi(fetchers[tab], { deps: [tab] })
+
+  const changeTab = (id) => {
+    if (id === tab) return
+    setData(null)
+    setTab(id)
+  }
 
   const graphProps = useMemo(() => {
     if (!data) return null
@@ -110,7 +116,7 @@ function Network() {
     return [
       { label: 'Nodos', value: data.stats.num_nodes },
       { label: 'Aristas del MST', value: data.stats.mst_num_edges },
-      { label: 'Costo total', value: data.stats.total_cost.toFixed(2) },
+      { label: 'Costo total', value: (data.stats.total_cost ?? 0).toFixed(2) },
     ]
   }, [data, tab])
 
@@ -128,7 +134,7 @@ function Network() {
           <button
             key={t.id}
             type="button"
-            onClick={() => setTab(t.id)}
+            onClick={() => changeTab(t.id)}
             className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
               tab === t.id
                 ? 'bg-gradient-to-r from-violet-500/20 to-indigo-500/10 text-violet-100 ring-1 ring-violet-500/30'

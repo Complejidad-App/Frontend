@@ -18,18 +18,21 @@ export function useApi(fetcher, { immediate = true, deps = [] } = {}) {
     fetcherRef.current = fetcher
   })
 
+  const callIdRef = useRef(0)
+
   const run = useCallback(async (...args) => {
+    const callId = ++callIdRef.current
     setLoading(true)
     setError(null)
     try {
       const result = await fetcherRef.current(...args)
-      setData(result)
+      if (callId === callIdRef.current) setData(result)
       return result
     } catch (err) {
-      setError(err)
+      if (callId === callIdRef.current) setError(err)
       return undefined
     } finally {
-      setLoading(false)
+      if (callId === callIdRef.current) setLoading(false)
     }
   }, [])
 
