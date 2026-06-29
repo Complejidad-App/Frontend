@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  color: #e2e8f0;
+  background-color: #07070f;
+  background-image:
+    radial-gradient(60rem 60rem at 110% -10%, rgba(139, 92, 246, 0.18), transparent 60%),
+    radial-gradient(50rem 50rem at -10% 10%, rgba(56, 189, 248, 0.12), transparent 55%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar discreto y acorde al tema oscuro */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
